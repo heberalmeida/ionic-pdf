@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <input hidden type="file" #filePicker (change)="fileSelected($event)">
+
+  <div id="container" *ngIf="!displayData; else displayFile">
+    <strong>Ready to create an app?</strong>
+    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  </div>
+
+  <pdf-viewer
+      class="ion-padding"
+      [src]="'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf'"
+      style="width: auto; height: 100%"
+      [render-text]="true" 
+      [autoresize]="true" 
+      [show-all]="true" 
+      [original-size]="false"
+    >
+    </pdf-viewer>
+
+  <ng-template #displayFile>
+    <ion-img
+      class="ion-padding"
+      *ngIf="['jpg', 'jpeg', 'png'].includes(displayData.format)"
+      [src]="displayData.item"
+    ></ion-img>
+
+    <pdf-viewer
+      class="ion-padding"
+      *ngIf="displayData.format === 'pdf'" 
+      [src]="displayData.item"
+      style="width: auto; height: 100%"
+    >
+    </pdf-viewer>
+  </ng-template>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="selectFile()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
